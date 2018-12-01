@@ -36,10 +36,11 @@ def add_entry_to_db(entry, is_event=True):
     """
     if is_event:
         try:
-            new_event = Event(entry['name'], entry['start_time'], entry['end_time'], entry['id'])
+            entry_id = len(Event.query.all())+1
+            new_event = Event(entry['name'], entry['start_time'], entry['end_time'], entry_id)
             db.session.add(new_event)
             db.session.commit()
-            return True
+            return entry_id
         except:
             return False
     else:
