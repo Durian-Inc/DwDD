@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from app import app
 
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://@localhost/debate'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -33,16 +34,19 @@ class Event(db.Model):
     """Account for each event
     Attributes:
         _name: The name of the event
-        _date_time: The time and date of the even that is happening
+        _start_time: The start time of the event
+        _end_time: The end time of the event
     """
     __tablename__ = "events"
 
     _name = db.Column(db.String, nullable=False, primary_key=True)
-    _date_time = db.Column(db.String, nullable=False, primary_key=True)
+    _start_time = db.Column(db.String, nullable=False, primary_key=True)
+    _end_time = db.Column(db.String, nullable=False, primary_key=True)
 
-    def __init__(self, name, date):
+    def __init__(self, name, start, end):
         self._name = name
-        self._date_time = date
+        self._start_time = start
+        self._end_time = end
 
     def __repr__(self):
         return '<Event %r>' % (self._name)
