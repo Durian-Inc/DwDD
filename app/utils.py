@@ -81,3 +81,15 @@ def get_event_drivers(event_id):
         drivers.append(jsonify(driver))
     return drivers
 
+def auth_user(phone, pwd):
+    """
+    @purpose: Authenticate a user with their phone and their password.
+    @args: The user's username. The password.
+    @return: True or false if the user is validated
+    """
+    result = DD.query.filter_by(_driver_phone=phone).first()
+    if result is not None and result._driver_password == pwd:
+        return True
+    else:
+        return False
+    return False 
