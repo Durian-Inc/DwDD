@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from app import app
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://@localhost/debate'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://@localhost:5432/DWDD'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -15,7 +15,7 @@ class DesignatedDriver(db.Model):
         _driver_password: The driver's password
         _driver_phone: The driver's phone number
     """
-    __tablename__ = "drivers"
+    __tablename__ = "designateddriver"
 
     _driver_name = db.Column(db.String, nullable=False)
     _driver_password = db.Column(db.String, nullable=False)
