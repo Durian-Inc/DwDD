@@ -14,11 +14,28 @@ def home():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
-        return "Hello World!"
+        return render_template('listview.html')
+
+@app.route('/event')
+def event():
+    if not session.get('logged_in'):
+        return render_template('drunkview.html')
+    else:
+        return render_template('ddview.html')
 
 @app.route('/<name>')
 def hello_name(name):
     return "Hello {}!".format(name)
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html')
+
+@app.route('/SOS')
+def sos():
+    return render_template('sos.html')
+
 
 @app.route('/login', methods = ['POST', 'GET'])
 def login():
