@@ -16,3 +16,13 @@ def hello():
 @app.route('/a')
 def bonk():
     return render_template('drunkview.html')
+
+
+@app.route('/d')
+def bink():
+    return render_template('ddview.html')
+
+
+@app.route('/login')
+def log():
+    return render_template('login.html')

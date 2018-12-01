@@ -1,3 +1,11 @@
+html,
+body {
+  height: 100%;
+}
+
+main {
+  height: calc(100% - 56px);
+}
 .cards-holder {
   padding: 15px;
 }
@@ -29,8 +37,8 @@
 }
 
 .fab {
-  width: 56px;
-  height: 56px;
+  width: 62px;
+  height: 62px;
   background-color: red;
   border-radius: 50%;
   box-shadow: 0 6px 10px 0 #666;
@@ -39,12 +47,13 @@
   font-size: 35px;
   color: white;
   text-align: center;
-  line-height: 52px;
+  line-height: 56px;
 
   position: fixed;
-  right: 50px;
-  bottom: 50px;
+  right: 30px;
+  bottom: 30px;
   cursor: pointer;
+  outline: none;
 }
 
 .fab:hover {
@@ -55,9 +64,43 @@
 }
 
 .fab span {
-  font-size: 22px;
-  line-height: 56px;
+  font-size: 20px;
+  line-height: 62px;
   display: block;
+}
+
+.dd-holder {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.status {
+  font-size: 20px;
+}
+.status span {
+  color: #66cc66;
+}
+
+.big-button {
+  margin-top: 30px;
+  transition: 0.2s ease-in-out all;
+  background: red;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  color: white;
+  font-size: 25px;
+}
+
+.big-button:hover {
+  background: #ee0000;
+  color: #eeeeee;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
 }
 
 /*
@@ -73,4 +116,10 @@
 
 .phone {
   float: right;
+}
+
+.form-signin {
+  max-width: 400px;
+  margin: auto;
+  padding: 30px 15px;
 }
