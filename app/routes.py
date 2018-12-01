@@ -12,37 +12,40 @@ from app.utils import auth_user, get_event_drivers
 def home():
     if request.method == 'POST':
         event = {
-            'event_name': request.form['eventName'],
-            'start_date': request.form['startTime'],
-            'end_date': request.form['endTime']
+            'event_name': request.form['eventname'],
+            'start_time': request.form['s-time'],
+            'end_time': request.form['e-time']
         }
-        add_entry_to_db(event)
-        redirect_url = '/'+event['event_name']+"-"+event['startDate']
+        event_id = add_entry_to_db(event)
+        redirect_url = '/'+event_id
         return redirect(redirect_url, code=302)
     if request.method == 'GET':
         #get all events
         events = get_all_entries(drivers=False)
-        return render_template('listview.html', events)
+        return render_template('listview.html', event_list=events)
 
-@app.route('/<event>', methods = ['POST', 'GET'])
+@app.route('/<event_id>', methods = ['POST', 'GET'])
 def event_route():
     if not session.get('phone_num'):
         #drunk view
         if request.method == 'POST':
         #sos
-        return sos()
+            return redirect('/SOS', code=302)
         if request.method == 'GET':
-        #get DDs from event, dd_list = get_dd(event)
-        get_event_drivers(event_id)
+        #get DDs from event
+            id = event_id
+            get_event_drivers(id)
 
         return render_template('drunkview.html')
     else:
         #dd view
-        #if request.method == 'POST':
+        if request.method == 'POST':
         #add driver to event
-        #add_driver_to_event()
-        #if request.method == 'GET':
+            id = event_id
+            add_driver_to_event(phone_num, id)
+        if request.method == 'GET':
         #get
+            
         return render_template('ddview.html')
 
 
