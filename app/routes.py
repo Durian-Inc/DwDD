@@ -4,6 +4,8 @@ from flask import Flask, render_template, url_for, request, redirect, session
 from flask import Flask, flash, abort
 from app import app
 from flask_sqlalchemy import SQLAlchemy
+from app.utils import get_all_entries, add_entry_to_db, add_driver_to_event
+from app.utils import auth_user, get_event_drivers
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -14,31 +16,34 @@ def home():
             'start_date': request.form['startTime'],
             'end_date': request.form['endTime']
         }
-        #add event to table
+        add_entry_to_db(event)
         redirect_url = '/'+event['event_name']+"-"+event['startDate']
         return redirect(redirect_url, code=302)
     if request.method == 'GET':
         #get all events
-        return render_template('listview.html')
+        events = get_all_entries(drivers=False)
+        return render_template('listview.html', events)
 
 @app.route('/<event>', methods = ['POST', 'GET'])
 def event_route():
-    if not session.get('logged_in'):
+    if not session.get('phone_num'):
         #drunk view
-        #if request.method == 'POST':
-            #sos
-        #if request.method == 'GET':
+        if request.method == 'POST':
+        #sos
+        return sos()
+        if request.method == 'GET':
         #get DDs from event, dd_list = get_dd(event)
+        get_event_drivers(event_id)
+
         return render_template('drunkview.html')
     else:
         #dd view
         #if request.method == 'POST':
-            #add driver to event
+        #add driver to event
+        #add_driver_to_event()
         #if request.method == 'GET':
-            #get
+        #get
         return render_template('ddview.html')
-
-
 
 
 @app.errorhandler(404)
@@ -55,11 +60,10 @@ def login():
     if request.method == 'GET':
         return render_template('login.html')
     if request.method == 'POST':
-        username = request.form['user']
-        password = request.form['password']
-        if  username == 'DD' and password == 'DD':
-            session['logged_in'] = True
+        phone_num = request.form['user']
+        pwd = request.form['password']
+        if  auth_user(phone_num, pwd) is not None:
+            session['phone_num'] = True
             return redirect('/', code=302)
         else:
-            flash("Invalid login, try again")
             return redirect('/login', code=302)
