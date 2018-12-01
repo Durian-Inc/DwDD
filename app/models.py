@@ -14,12 +14,14 @@ class DesignatedDriver(db.Model):
         _driver_name: The full name of the driver
         _driver_password: The driver's password
         _driver_phone: The driver's phone number
+        _driver_curr_event: The event that they currently are DDing
     """
     __tablename__ = "designateddriver"
 
     _driver_name = db.Column(db.String, nullable=False)
     _driver_password = db.Column(db.String, nullable=False)
     _driver_phone = db.Column(db.String, nullable=False, unique=True, primary_key=True)
+    _driver_curr_event = db.Column(db.Integer, nullable=True)
 
     def __init__(self, name, password, phone_number):
         self._driver_name = name
@@ -39,14 +41,16 @@ class Event(db.Model):
     """
     __tablename__ = "events"
 
-    _name = db.Column(db.String, nullable=False, primary_key=True)
-    _start_time = db.Column(db.String, nullable=False, primary_key=True)
-    _end_time = db.Column(db.String, nullable=False, primary_key=True)
+    _name = db.Column(db.String, nullable=False)
+    _start_time = db.Column(db.String, nullable=False)
+    _end_time = db.Column(db.String, nullable=False)
+    _event_id = db.Column(db.Integer, nullable=True, unique=True, primary_key=True)
 
-    def __init__(self, name, start, end):
+    def __init__(self, name, start, end, evnet_id):
         self._name = name
         self._start_time = start
         self._end_time = end
+        self._event_id = evnet_id
 
     def __repr__(self):
         return '<Event %r>' % (self._name)
