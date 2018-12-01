@@ -8,6 +8,8 @@ flask = "*"
 flask-sqlalchemy = "*"
 "psycopg2" = "*"
 twilio = "*"
+Flask-Migrate = "*"
+flask_script = "*"
 
 [dev-packages]
 

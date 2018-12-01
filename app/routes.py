@@ -1,46 +1,70 @@
 import os
 
-from flask import Flask, redirect, render_template, request
+from flask import (Flask, abort, flash, redirect, render_template, request,
+                   session)
 from flask_sqlalchemy import SQLAlchemy
-
 from twilio.rest import Client
 from twilio.twiml.voice_response import Say, VoiceResponse
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+from app import app
+from app.utils import (add_driver_to_event, add_entry_to_db, auth_user,
+                       get_all_entries, get_event_drivers)
 
 
-@app.route('/')
-def hello():
-    return render_template('listview.html')
-
-
-@app.route('/a', methods=['GET', 'POST'])
-def bonk():
+@app.route('/', methods=['POST', 'GET'])
+def home():
+    if request.method == 'POST':
+        event = {
+            'event_name': request.form['eventname'],
+            'start_date': request.form['s-time'],
+            'end_date': request.form['e-time']
+        }
+        # id = add_entry_to_db(event)
+        redirect_url = '/' + id
+        return redirect(redirect_url, code=302)
     if request.method == 'GET':
-        return render_template('drunkview.html')
-    elif request.method == 'POST':
-        # nums = ['+13145876003', '+13146517436']
-        nums = ['+13145876003']
-        for num in nums:
-            call(num)
-        return redirect('/sos', code=302)
+        #get all events
+        #events = get_all_entries(drivers=False)
+        events = None
+        return render_template('listview.html', events=events)
 
 
+@app.route('/<event>', methods=['POST', 'GET'])
+def event_route(event):
+    if not session.get('phone_num'):
+        #drunk view
+        if request.method == 'POST':
+            #sos
+            # nums = ['+13145876003', '+13146517436']
+            nums = ['+13145876003']
+            for num in nums:
+                call(num)
+            return redirect("/sos", code=302)
+        if request.method == 'GET':
+            #get DDs from event, dd_list = get_dd(event)
+            # dds = get_event_drivers(event_id)
+            dds = None
+
+            return render_template('drunkview.html', dds=dds)
+    else:
+        #dd view
+        #if request.method == 'POST':
+        #add driver to event
+        #add_driver_to_event()
+        #if request.method == 'GET':
+        #get
+        return render_template('ddview.html')
+
+
+@app.route('/SOS', methods=['GET'])
 @app.route('/sos', methods=['GET'])
 def sos():
     return render_template('sos.html')
 
 
-@app.route('/d')
-def bink():
-    return render_template('ddview.html')
-
-
-@app.route('/login')
-def log():
-    return render_template('login.html')
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html')
 
 
 def call(num):
@@ -56,3 +80,18 @@ def call(num):
         from_='+16364342737')
 
     print(call.sid)
+
+
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html')
+    elif request.method == 'POST':
+        print(request.form)
+        phone_num = request.form.get('phone')
+        pwd = request.form.get('password')
+        if auth_user(phone_num, pwd):
+            session['phone_num'] = True
+            return redirect('/', code=302)
+        else:
+            return redirect('/login', code=302)
