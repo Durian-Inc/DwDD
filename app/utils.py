@@ -6,7 +6,7 @@ def get_all_entries(drivers=True):
     """
     @purpose: Get a list of json objects for the given entires
     @args:  The table that should be queried
-    @returns:   None
+    @returns:   A list of the entries in question as JSON objects
     """
     if drivers:
         driver = {"name": None, "phone": None}
@@ -30,9 +30,9 @@ def get_all_entries(drivers=True):
 
 def add_entry_to_db(entry, is_event=True):
     """
-    @purpose:
-    @args: 
-    @return:
+    @purpose:   Adds an entry to the database
+    @args:  The entry as a dictionary, a bool to tell if it is an event
+    @return:    True / False based on the commit to the database
     """
     if is_event:
         try:
@@ -54,9 +54,9 @@ def add_entry_to_db(entry, is_event=True):
 
 def add_driver_to_event(driver_phone, event_id):
     """
-    @purpose:
-    @args: 
-    @return:
+    @purpose:   Links a driver to an event
+    @args:  Driver's phone number, the id of the event
+    @return:    True / False based on the update to the database
     """
     try:
         driver = DD.query.filter_by(_driver_phone=driver_phone).first()
@@ -69,9 +69,9 @@ def add_driver_to_event(driver_phone, event_id):
 
 def get_event_drivers(event_id):
     """
-    @purpose:
-    @args: 
-    @return:
+    @purpose: Gets a list of all the drivers that are associated with an event
+    @args: The id of the event 
+    @return: A list of the drivers in a JSON format
     """ 
     driver = {"name": None, "phone": None}
     drivers = []
