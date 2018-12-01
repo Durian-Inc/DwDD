@@ -63,10 +63,12 @@ main {
   transform: scale(1.05);
 }
 
-.fab span {
+.fab-sos {
   font-size: 20px;
   line-height: 62px;
   display: block;
+  border: none;
+  outline: none;
 }
 
 .dd-holder {
@@ -88,6 +90,8 @@ main {
   margin-top: 30px;
   transition: 0.2s ease-in-out all;
   background: red;
+  border: none;
+  outline: none;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
   border-radius: 50%;
   width: 200px;
@@ -122,4 +126,10 @@ main {
   max-width: 400px;
   margin: auto;
   padding: 30px 15px;
+}
+
+.list-group-item:focus,
+.list-group-item:hover {
+  z-index: unset !important;
+  text-decoration: none;
 }
