@@ -2,11 +2,8 @@ import os
 
 from flask import Flask, render_template, url_for, request, redirect, session
 from flask import Flask, flash, abort
+from app import app
 from flask_sqlalchemy import SQLAlchemy
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -28,16 +25,16 @@ def home():
 def event_route():
     if not session.get('logged_in'):
         #drunk view
-        if request.method == 'POST':
+        #if request.method == 'POST':
             #sos
-        if request.method == 'GET':
+        #if request.method == 'GET':
         #get DDs from event, dd_list = get_dd(event)
         return render_template('drunkview.html')
     else:
         #dd view
-        if request.method == 'POST':
+        #if request.method == 'POST':
             #add driver to event
-        if request.method == 'GET':
+        #if request.method == 'GET':
             #get
         return render_template('ddview.html')
 
