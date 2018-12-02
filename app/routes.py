@@ -4,11 +4,11 @@ from datetime import datetime
 from flask import (Flask, abort, flash, redirect, render_template, request,
                    session)
 from flask_sqlalchemy import SQLAlchemy
-from twilio.rest import Client
 
 from app import app
 from app.utils import (add_driver_to_event, add_entry_to_db, auth_user,
                        get_all_entries, get_event_drivers)
+from twilio.rest import Client
 
 
 @app.route('/', methods=['POST', 'GET'])

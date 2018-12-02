@@ -1,7 +1,10 @@
 from datetime import datetime
 
+from flask import jsonify
+from flask_sqlalchemy import SQLAlchemy
+
 from app.models import DesignatedDriver as DD
-from app.models import Event
+from app.models import Event, db
 
 
 def get_all_entries(drivers=True):
@@ -42,22 +45,26 @@ def add_entry_to_db(entry, is_event=True):
     """
     if is_event:
         try:
-            entry_id = len(Event.query.all()) + 1
-            new_event = Event(entry['name'], entry['start_time'],
+            entry_id = len(Event.query.all())
+            if entry_id == 0:
+                entry_id = 1
+            else:
+                entry_id += 1
+            new_event = Event(entry['event_name'], entry['start_time'],
                               entry['end_time'], entry_id)
             db.session.add(new_event)
             db.session.commit()
             return entry_id
         except:
-            return False
+            return 0
     else:
         try:
             new_driver = DD(entry['name'], entry['pwd'], entry['phone'])
             db.session.add(new_driver)
             db.session.commit()
-            return True
+            return len(new_driver)
         except:
-            return False
+            return 0
 
 
 def add_driver_to_event(driver_phone, event_id):
