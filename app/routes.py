@@ -44,8 +44,12 @@ def event_route(event_id):
         #drunk view
         if request.method == 'POST':
             #sos
+            dds = get_event_drivers(event_id)
+            print(dds)
+            nums = [x['phone'] for x in dds if x['available']]
+            print(nums)
             # nums = ['+13145876003', '+13146517436']
-            nums = ['+13145876003']
+            # nums = ['+13145876003']
             for num in nums:
                 call(num)
             return redirect("/sos", code=302)
@@ -106,6 +110,7 @@ def login():
 
 @app.route('/logout', methods=['GET'])
 def logout():
+    add_driver_to_event(session.get('phone_num'), 0)
     session['phone_num'] = None
     flash("Logged out", "success")
     return redirect('/', code=302)

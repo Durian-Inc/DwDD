@@ -92,7 +92,7 @@ def get_event_drivers(event_id):
     for result in DD.query.filter_by(_driver_curr_event=event_id).all():
         driver = {"name": None, "phone": None, "available": None}
         driver['name'] = result._driver_name
-        driver['number'] = result._driver_phone
+        driver['phone'] = result._driver_phone
         driver['available'] = result._driver_is_available
         drivers.append(driver)
     return drivers

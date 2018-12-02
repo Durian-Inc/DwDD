@@ -12,7 +12,7 @@ active
 <ul class="cards-holder">
   {% for event in events['now'] %}
   <li class="card" style="width: 18rem;">
-    <img class="card-img-top" src=".../100px160/" alt="Card image cap">
+    <img class="card-img-top" src="/static/img/image.png" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">{{event.name}}</h5>
       <h6 class="card-subtitle mb-2 text-muted">Start: {{event.start_time.strftime('%b. %e, %Y at %-I:%M %p')}}</h6>
@@ -29,7 +29,7 @@ active
 <ul class="cards-holder">
   {% for event in events['upcoming'] %}
   <li class="card" style="width: 18rem;">
-    <img class="card-img-top" src=".../100px160/" alt="Card image cap">
+    <img class="card-img-top" src="/static/img/image.png" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">{{event.name}}</h5>
       <h6 class="card-subtitle mb-2 text-muted">Start: {{event.start_time.strftime('%b. %e, %Y at %-I:%M %p')}}</h6>
