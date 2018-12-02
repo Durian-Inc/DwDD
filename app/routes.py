@@ -45,9 +45,9 @@ def event_route(event_id):
         if request.method == 'POST':
             #sos
             # nums = ['+13145876003', '+13146517436']
-            #nums = ['+13145876003']
-            #for num in nums:
-            #    call(num)
+            # nums = ['+13145876003']
+            # for num in nums:
+            #     call(num)
             return redirect("/sos", code=302)
         if request.method == 'GET':
             #get DDs from event, dd_list = get_dd(event)

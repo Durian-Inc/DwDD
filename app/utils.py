@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from flask import jsonify
-from flask_sqlalchemy import SQLAlchemy
 
 from app.models import DesignatedDriver as DD
 from app.models import Event, db
@@ -80,6 +79,21 @@ def add_driver_to_event(driver_phone, event_id):
         return True
     except:
         return False
+
+
+def chage_driver_state(driver_phone):
+    """
+    @purpose: Changes the state of the driver's availability
+    @args: Driver's phone number 
+    @returns: True / False based on if the commit went well
+    """
+    try:
+        driver = DD.query.filter_by(_driver_phone=driver_phone).first()
+        driver._driver_is_available = not(driver._driver_is_available)
+        db.session.commit()
+        return True
+    except:
+        return True
 
 
 def get_event_drivers(event_id):
