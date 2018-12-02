@@ -2,21 +2,11 @@
 {% block main %}
 <div class="list-holder">
   <ul class="list-group">
-    <li class="list-group-item dd-list-item__on"><span></span>Cras justo odio
-      <a href="#" class="phone"><i class="fa fa-phone"></i></a>
+    {% for dd in dds %}
+    <li class="list-group-item dd-list-item__on"><span></span>{{dd.name}}
+      <a href="tel:{{dd.number}}" class="phone"><i class="fa fa-phone"></i></a>
     </li>
-    <li class="list-group-item dd-list-item__on"><span></span>Dapibus ac facilisis in
-      <a href="#" class="phone"><i class="fa fa-phone"></i></a>
-    </li>
-    <li class="list-group-item dd-list-item__on"><span></span>Morbi leo risus
-      <a href="#" class="phone"><i class="fa fa-phone"></i></a>
-    </li>
-    <li class="list-group-item dd-list-item__off"><span></span>Porta ac consectetur ac
-      <a href="#" class="phone"><i class="fa fa-phone"></i></a>
-    </li>
-    <li class="list-group-item dd-list-item__off"><span></span>Vestibulum at eros
-      <a href="#" class="phone"><i class="fa fa-phone"></i></a>
-    </li>
+    {% endfor %}
   </ul>
 </div>
 <form method="POST">

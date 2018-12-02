@@ -1,5 +1,7 @@
-from app.models import DesignatedDriver as DD, Event
-from flask import jsonify
+from datetime import datetime
+
+from app.models import DesignatedDriver as DD
+from app.models import Event
 
 
 def get_all_entries(drivers=True):
@@ -9,22 +11,26 @@ def get_all_entries(drivers=True):
     @returns:   A list of the entries in question as JSON objects
     """
     if drivers:
-        driver = {"name": None, "phone": None}
         drivers = []
         for result in DD.query.all():
+            driver = {"name": None, "phone": None}
             driver['name'] = result._driver_name
             driver['number'] = result._driver_phone
-            drivers.append(jsonify(driver))
+            drivers.append(driver)
         return drivers
     else:
-        local_event = {"name": None, "start_time": None, "end_time": None}
         events = []
         for result in Event.query.all():
+            local_event = {"name": None, "start_time": None, "end_time": None}
             local_event['name'] = result._name
-            local_event['start_time'] = result._start_time
-            local_event['end_time'] = result._end_time
+            datetime_object = datetime.strptime(result._start_time,
+                                                '%m/%d/%Y %I:%M %p')
+            local_event['start_time'] = datetime_object
+            datetime_object = datetime.strptime(result._end_time,
+                                                '%m/%d/%Y %I:%M %p')
+            local_event['end_time'] = datetime_object
             local_event['id'] = result._event_id
-            events.append(jsonify(local_event))
+            events.append(local_event)
         return events
 
 
@@ -36,8 +42,9 @@ def add_entry_to_db(entry, is_event=True):
     """
     if is_event:
         try:
-            entry_id = len(Event.query.all())+1
-            new_event = Event(entry['name'], entry['start_time'], entry['end_time'], entry_id)
+            entry_id = len(Event.query.all()) + 1
+            new_event = Event(entry['name'], entry['start_time'],
+                              entry['end_time'], entry_id)
             db.session.add(new_event)
             db.session.commit()
             return entry_id
@@ -73,14 +80,15 @@ def get_event_drivers(event_id):
     @purpose: Gets a list of all the drivers that are associated with an event
     @args: The id of the event 
     @return: A list of the drivers in a JSON format
-    """ 
+    """
     driver = {"name": None, "phone": None}
     drivers = []
     for result in DD.query.filter_by(_driver_curr_event=event_id).all():
         driver['name'] = result._driver_name
         driver['number'] = result._driver_phone
-        drivers.append(jsonify(driver))
+        drivers.append(driver)
     return drivers
+
 
 def auth_user(phone, pwd):
     """
@@ -93,4 +101,4 @@ def auth_user(phone, pwd):
         return True
     else:
         return False
-    return False 
+    return False

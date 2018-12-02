@@ -30,12 +30,26 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <a class="nav-item nav-link {% block eventactive1 %}{% endblock %}" href="/">Events {% block eventactive2 %}{% endblock %}</a>
+          {% if session['phone_num'] is none %}
           <a class="nav-item nav-link {% block loginactive1 %}{% endblock %}" href="/login">Login{% block loginactive2 %}{% endblock %}</a>
+          {% else %}
+          <a class="nav-item nav-link" href="/logout">Logout</a>
+          {% endif %}
         </div>
       </div>
     </nav>
 
     <main>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+        {% for category, message in messages %}
+          <li class="alert alert-{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
       {% block main %}{% endblock %} 
     </main>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
