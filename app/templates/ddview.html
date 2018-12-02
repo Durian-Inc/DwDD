@@ -1,9 +1,19 @@
 {% extends 'base.html' %}
 {% block main %}
 <div class="dd-holder">
-  <div class="status">You are <span>on location</span></div>
+  <div class="status">You are
+    {% if me.available == true %}
+    <span> on location</span>
+    {% else %}
+    <span> away</span>
+    {% endif %}
+  </div>
   <form method="post">
-    <input class="big-button" type="submit" name="status" value="Leaving" />
+    {% if me.available == true %}
+    <input class="big-button leaving" type="submit" name="status" value="Leaving" />
+    {% else %}
+    <input class="big-button returning" type="submit" name="status" value="Returning" />
+    {% endif %}
   </form>
 </div>
 {% endblock %}

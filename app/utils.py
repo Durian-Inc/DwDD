@@ -81,7 +81,7 @@ def add_driver_to_event(driver_phone, event_id):
         return False
 
 
-def chage_driver_state(driver_phone):
+def change_driver_state(driver_phone):
     """
     @purpose: Changes the state of the driver's availability
     @args: Driver's phone number 
@@ -89,11 +89,28 @@ def chage_driver_state(driver_phone):
     """
     try:
         driver = DD.query.filter_by(_driver_phone=driver_phone).first()
-        driver._driver_is_available = not(driver._driver_is_available)
+        driver._driver_is_available = not (driver._driver_is_available)
         db.session.commit()
         return True
     except:
         return True
+
+
+def get_driver(driver_phone):
+    """
+    @purpose: Changes the state of the driver's availability
+    @args: Driver's phone number 
+    @returns: True / False based on if the commit went well
+    """
+    try:
+        result = DD.query.filter_by(_driver_phone=driver_phone).first()
+        driver = {"name": None, "phone": None}
+        driver['name'] = result._driver_name
+        driver['number'] = result._driver_phone
+
+        return driver
+    except:
+        return None
 
 
 def get_event_drivers(event_id):

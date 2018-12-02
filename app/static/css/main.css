@@ -30,7 +30,7 @@ button {
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background: green;
+  background: #28a745;
 }
 
 .dd-list-item__off span {
@@ -39,7 +39,7 @@ button {
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  border: 2px red solid;
+  border: 2px #dc3545 solid;
 }
 
 .dd-list-item__off a {
@@ -49,7 +49,7 @@ button {
 .fab {
   width: 62px;
   height: 62px;
-  background-color: red;
+  background-color: #dc3545;
   border-radius: 50%;
   box-shadow: 0 6px 10px 0 #666;
   transition: all 0.1s ease-in-out;
@@ -99,7 +99,6 @@ button {
 .big-button {
   margin-top: 30px;
   transition: 0.2s ease-in-out all;
-  background: red;
   border: none;
   outline: none;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
@@ -161,4 +160,12 @@ button {
 
 .title {
   padding: 15px 15px 0 15px;
+}
+
+.leaving {
+  background: #dc3545;
+}
+
+.returning {
+  background: #28a745;
 }

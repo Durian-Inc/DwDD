@@ -8,7 +8,8 @@ from twilio.rest import Client
 
 from app import app
 from app.utils import (add_driver_to_event, add_entry_to_db, auth_user,
-                       get_all_entries, get_event_drivers)
+                       change_driver_state, get_all_entries, get_driver,
+                       get_event_drivers)
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -57,12 +58,14 @@ def event_route(event_id):
         #dd view
         if request.method == 'POST':
             change_driver_state(session.get('phone_num'))
-            return render_template('ddview.html')
+            driver = get_driver(session.get('phone_num'))
+            return render_template('ddview.html', )
         if request.method == 'GET':
             #add driver to event
             add_driver_to_event(session.get('phone_num'), event_id)
             #get
-            return render_template('ddview.html')
+            driver = get_driver(session.get('phone_num'))
+            return render_template('ddview.html', me=driver)
 
 
 @app.route('/SOS', methods=['GET'])
@@ -76,17 +79,16 @@ def page_not_found(error):
     return render_template('404.html')
 
 
-#def call(num):
-    # Your Account Sid and Auth Token from twilio.com/console
-    #account_sid = 'AC4b362744f0815718c1a3159ddaeeccf4'
-    #auth_token = 'c6f53fd9be6781e26005e93f7d1de239'
-    #client = Client(account_sid, auth_token)
+def call(num):
+    account_sid = 'AC4b362744f0815718c1a3159ddaeeccf4'
+    auth_token = 'c6f53fd9be6781e26005e93f7d1de239'
+    client = Client(account_sid, auth_token)
 
-    #call = client.calls.create(
-    #    url=
-    #    'https://handler.twilio.com/twiml/EH3d3693b942c9740bae7ec0a24fef443c',
-    #    to=num,
-    #    from_='+16364342737')
+    call = client.calls.create(
+        url=
+        'https://handler.twilio.com/twiml/EH3d3693b942c9740bae7ec0a24fef443c',
+        to=num,
+        from_='+16364342737')
 
 
 @app.route('/login', methods=['POST', 'GET'])
