@@ -165,7 +165,13 @@ button {
 .leaving {
   background: #dc3545;
 }
+.leaving:hover {
+  background: #dc3545;
+}
 
 .returning {
+  background: #28a745;
+}
+.returning:hover {
   background: #28a745;
 }

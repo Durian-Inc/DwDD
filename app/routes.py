@@ -59,7 +59,7 @@ def event_route(event_id):
         if request.method == 'POST':
             change_driver_state(session.get('phone_num'))
             driver = get_driver(session.get('phone_num'))
-            return render_template('ddview.html', )
+            return render_template('ddview.html', me=driver)
         if request.method == 'GET':
             #add driver to event
             add_driver_to_event(session.get('phone_num'), event_id)

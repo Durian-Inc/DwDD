@@ -107,6 +107,7 @@ def get_driver(driver_phone):
         driver = {"name": None, "phone": None}
         driver['name'] = result._driver_name
         driver['number'] = result._driver_phone
+        driver['available'] = result._driver_is_available
 
         return driver
     except:

@@ -2,14 +2,14 @@
 {% block main %}
 <div class="dd-holder">
   <div class="status">You are
-    {% if me.available == true %}
+    {% if me['available'] == true %}
     <span> on location</span>
     {% else %}
     <span> away</span>
     {% endif %}
   </div>
   <form method="post">
-    {% if me.available == true %}
+    {% if me['available'] == true %}
     <input class="big-button leaving" type="submit" name="status" value="Leaving" />
     {% else %}
     <input class="big-button returning" type="submit" name="status" value="Returning" />

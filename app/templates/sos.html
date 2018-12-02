@@ -1,21 +1,14 @@
 {% extends 'base.html' %}
 {% block main %}
 <div class="dd-holder" onloadstart="alert('Done')">
-  <audio id="beep_code">
-      <source src="../static/beep.mp3">
-  </audio>
   <script type="text/javascript">
-    var beep_sound = document.getElementById('beep_code')
-    
-    function play_sound() {
-      while(true) {
-        console.log("Sleeping")
-        setTimeout(beep_sound.play(), 3000)
-        console.log("NOt sleeping")
-      }
-    }
-
-    </script>
+    myAudio = new Audio('/static/beep.mp3'); 
+    myAudio.addEventListener('ended', function() {
+        this.currentTime = 0;
+        setTimeout(this.play(), 3000);
+    }, false);
+    myAudio.play();
+  </script>
   <div style="font-size: 55px; text-align: center;">Help is<br>on the way</div>
 </div>
 {% endblock %}
