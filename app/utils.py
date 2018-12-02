@@ -1,6 +1,5 @@
 from app.models import DesignatedDriver as DD, Event, db
 from flask import jsonify
-from flask_sqlalchemy import SQLAlchemy
 
 
 def get_all_entries(drivers=True):
@@ -89,6 +88,7 @@ def get_event_drivers(event_id):
         drivers.append(jsonify(driver))
     return drivers
 
+
 def auth_user(phone, pwd):
     """
     @purpose: Authenticate a user with their phone and their password.
@@ -100,4 +100,5 @@ def auth_user(phone, pwd):
         return True
     else:
         return False
-    return False 
+    return False    
+
