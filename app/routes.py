@@ -45,11 +45,7 @@ def event_route(event_id):
         if request.method == 'POST':
             #sos
             dds = get_event_drivers(event_id)
-            print(dds)
             nums = [x['phone'] for x in dds if x['available']]
-            print(nums)
-            # nums = ['+13145876003', '+13146517436']
-            # nums = ['+13145876003']
             for num in nums:
                 call(num)
             return redirect("/sos", code=302)
@@ -60,7 +56,8 @@ def event_route(event_id):
     else:
         #dd view
         if request.method == 'POST':
-            return "oops"
+            change_driver_state(session.get('phone_num'))
+            return render_template('ddview.html')
         if request.method == 'GET':
             #add driver to event
             add_driver_to_event(session.get('phone_num'), event_id)
