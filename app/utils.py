@@ -1,9 +1,14 @@
+'''
+Utility functions for the application
+'''
 from datetime import datetime
+from functools import wraps
 
-from flask import jsonify
+from flask import redirect, request, session, url_for
 
 from app.models import DesignatedDriver as DD
 from app.models import Event, db
+from twilio.rest import Client
 
 
 def get_all_entries(drivers=True):
@@ -142,3 +147,25 @@ def auth_user(phone, pwd):
     else:
         return False
     return False
+
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get('phone_num'):
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+
+    return decorated_function
+
+
+def call(num):
+    account_sid = ''  # Removed and key deleted
+    auth_token = ''  # Removed and key deleted
+
+    twiml_link = ''
+    twilio_number = ''
+
+    if account_sid and auth_token and twiml_link and twilio_number:
+        client = Client(account_sid, auth_token)
+        call = client.calls.create(url=twiml_link, to=num, from_=twilio_number)

@@ -30,10 +30,10 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <a class="nav-item nav-link {% block eventactive1 %}{% endblock %}" href="/">Events {% block eventactive2 %}{% endblock %}</a>
-          {% if session['phone_num'] is none %}
-          <a class="nav-item nav-link {% block loginactive1 %}{% endblock %}" href="/login">Login{% block loginactive2 %}{% endblock %}</a>
-          {% else %}
+          {% if session.phone_num %}
           <a class="nav-item nav-link" href="/logout">Logout</a>
+          {% else %}
+          <a class="nav-item nav-link {% block loginactive1 %}{% endblock %}" href="/login">Login{% block loginactive2 %}{% endblock %}</a>
           {% endif %}
         </div>
       </div>

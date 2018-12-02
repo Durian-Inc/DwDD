@@ -5,7 +5,7 @@
     myAudio = new Audio('/static/beep.mp3'); 
     myAudio.addEventListener('ended', function() {
         this.currentTime = 0;
-        setTimeout(this.play(), 3000);
+      setTimeout(()=>{this.play()}, 2000);
     }, false);
     myAudio.play();
   </script>
