@@ -4,11 +4,11 @@ from datetime import datetime
 from flask import (Flask, abort, flash, redirect, render_template, request,
                    session)
 from flask_sqlalchemy import SQLAlchemy
+from twilio.rest import Client
 
 from app import app
 from app.utils import (add_driver_to_event, add_entry_to_db, auth_user,
                        get_all_entries, get_event_drivers)
-from twilio.rest import Client
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -31,8 +31,6 @@ def home():
         resp = get_all_entries(drivers=False)
         now = datetime.now()
         relevant = [x for x in resp if x['end_time'] > now]
-        print([x for x in relevant if x['start_time'] > now])
-        print(relevant[2]['start_time'], now)
         events = {
             "now": [x for x in relevant if x['start_time'] < now],
             "upcoming": [x for x in relevant if x['start_time'] > now]
@@ -95,7 +93,6 @@ def login():
     if request.method == 'GET':
         return render_template('login.html')
     elif request.method == 'POST':
-        print(request.form)
         phone_num = request.form.get('phone')
         pwd = request.form.get('password')
         if auth_user(phone_num, pwd):

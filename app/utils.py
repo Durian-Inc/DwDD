@@ -88,11 +88,12 @@ def get_event_drivers(event_id):
     @args: The id of the event 
     @return: A list of the drivers in a JSON format
     """
-    driver = {"name": None, "phone": None}
     drivers = []
     for result in DD.query.filter_by(_driver_curr_event=event_id).all():
+        driver = {"name": None, "phone": None, "available": None}
         driver['name'] = result._driver_name
         driver['number'] = result._driver_phone
+        driver['available'] = result._driver_is_available
         drivers.append(driver)
     return drivers
 
