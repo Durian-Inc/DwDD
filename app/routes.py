@@ -16,11 +16,11 @@ def home():
     if request.method == 'POST':
         event = {
             'event_name': request.form['eventname'],
-            'start_date': request.form['s-time'],
-            'end_date': request.form['e-time']
+            'start_time': request.form['s-time'],
+            'end_time': request.form['e-time']
         }
-        # id = add_entry_to_db(event)
-        redirect_url = '/' + id
+        id = add_entry_to_db(event)
+        redirect_url = '/' + str(id)
         return redirect(redirect_url, code=302)
     if request.method == 'GET':
         #get all events
