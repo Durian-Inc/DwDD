@@ -133,3 +133,22 @@ main {
   z-index: unset !important;
   text-decoration: none;
 }
+
+.flashes {
+  list-style: none;
+  padding: 0 15px;
+  margin: 0;
+}
+
+.alert {
+  margin-top: 10px;
+  margin-bottom: 0 !important;
+}
+
+.card { 
+  width: 100% !important;
+}
+
+.title {
+  padding: 15px 15px 0 15px;
+}

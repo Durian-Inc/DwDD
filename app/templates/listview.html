@@ -7,19 +7,42 @@ active
 <span class="sr-only">(current)</span>
 {% endblock %}
 {% block main %}
-<div class="cards-holder">
-  <div class="card-columns">
-    <div class="card" style="width: 18rem;">
-      <img class="card-img-top" src=".../100px160/" alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">Event name</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Start time</h6>
-        <h6 class="card-subtitle mb-2 text-muted">End time</h6>
-        <a href="/a" class="card-link">Link to event</a>
-      </div>
+{% if events['now'] %}
+<h4 class="title">Now</h4>
+<ul class="cards-holder">
+  {% for event in events['now'] %}
+  <li class="card" style="width: 18rem;">
+    <img class="card-img-top" src=".../100px160/" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{event.name}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Start: {{event.start_time.strftime('%b. %e, %Y at %-I:%M %p')}}</h6>
+      <h6 class="card-subtitle mb-2 text-muted">End: {{event.end_time.strftime('%b. %e, %Y at %-I:%M %p')}}</h6>
+      <a href="/{{event.id}}" class="card-link">Join</a>
     </div>
-  </div>
-</div>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% if events['upcoming'] %}
+<h4 class="title">Upcoming</h4>
+<ul class="cards-holder">
+  {% for event in events['upcoming'] %}
+  <li class="card" style="width: 18rem;">
+    <img class="card-img-top" src=".../100px160/" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{event.name}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Start: {{event.start_time.strftime('%b. %e, %Y at %-I:%M %p')}}</h6>
+      <h6 class="card-subtitle mb-2 text-muted">End: {{event.end_time.strftime('%b. %e, %Y at %-I:%M %p')}}</h6>
+      <a href="/{{event.id}}" class="card-link">Join</a>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+
+
 
 <!-- Button trigger modal -->
 <div class="fab" data-toggle="modal" data-target="#newEvent">+</div>
@@ -38,16 +61,16 @@ active
         <form id="newevent" method="post">
           <div class="form-group">
             <label for="eventname">Event Name</label>
-            <input type="text" class="form-control" name="eventname" id="eventname" placeholder="Bobby's Juice Kegger">
+            <input type="text" name="eventname" class="form-control" id="eventname" placeholder="Bobby's Juice Kegger">
           </div>
           <div class="row">
             <div class="col">
               <label for="s-time">Start Time</label>
-              <input type="text" class="form-control" name="s-time" id="s-time">
+              <input type="text" name="s-time" class="form-control" id="s-time">
             </div>
             <div class="col">
               <label for="e-time">End Time</label>
-              <input type="text" class="form-control" name="e-time" id="e-time">
+              <input type="text" name="e-time" class="form-control" id="e-time">
             </div>
           </div>
         </form>
