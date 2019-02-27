@@ -17,7 +17,7 @@ active
       <h5 class="card-title">{{event.name}}</h5>
       <h6 class="card-subtitle mb-2 text-muted">Start: {{event.start_time.strftime('%b. %e, %Y at %-I:%M %p')}}</h6>
       <h6 class="card-subtitle mb-2 text-muted">End: {{event.end_time.strftime('%b. %e, %Y at %-I:%M %p')}}</h6>
-      <a href="/{{event.id}}" class="card-link">Join</a>
+      <a href="/events/{{event.id}}" class="card-link">Join</a>
     </div>
   </li>
   {% endfor %}

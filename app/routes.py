@@ -38,7 +38,7 @@ def events():
         return render_template('listview.html', events=events)
 
 
-@app.route('/<event_id>', methods=['POST', 'GET'])
+@app.route('/events/<event_id>', methods=['POST', 'GET'])
 def event(event_id):
     if not session.get('phone_num'):
         if request.method == 'GET':
